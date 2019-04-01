@@ -14,6 +14,10 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
+    private String[] categories = {"Groceries","Bills","Tuition"};
+    private String[] expenses = {"Milk","Butter","Cookies","SBB","Telenor"};
+    private int[] expensesPrice = {80,100,150,2500,999};
+
     private MutableLiveData<List<Expense>> expenseLiveData;
     private MutableLiveData<List<Category>> categoryLiveData;
 
@@ -26,6 +30,8 @@ public class MainViewModel extends ViewModel {
 
         this.expenseList = new ArrayList<>();
         this.categoryList = new ArrayList<>();
+
+        this.generateDummyData();
     }
 
     public void addExpense(Expense expense){
@@ -114,12 +120,12 @@ public class MainViewModel extends ViewModel {
     }
 
     private void generateDummyData(){
-        for(int i=0;i<10;i++){
-            if(i<3)
-                this.categoryList.add(new Category("Category "+(i+1),0));
-            this.expenseList.add(new Expense("Expense "+(i+1),categoryList.get(i%3).getName(),i*33));
+        for(int i=0;i<expenses.length;i++){
+            if(i<3) {
+                this.addCategory(new Category(categories[i], 0));
+                this.addExpense(new Expense(expenses[i],categories[0],expensesPrice[i]));
+            } else
+                this.addExpense(new Expense(expenses[i],categories[1],expensesPrice[i]));
         }
-        this.setExpenseData(expenseList);
-        this.setCategoryData(categoryList);
     }
 }
