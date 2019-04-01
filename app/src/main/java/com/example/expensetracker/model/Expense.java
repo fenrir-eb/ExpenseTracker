@@ -54,12 +54,10 @@ public class Expense {
     }
 
     public String toString(){
-        String data = this.name+"\n"+this.category+"\n"+this.price;
-        return data;
+        return this.name+"\n"+this.category+"\n"+this.price;
     }
 
     public String getData(){
-        String data = this.id+" "+this.name+" "+this.category+" "+this.price+" "+dateFormat.format(this.date)+" "+URL;
-        return data;
+        return this.id+" "+this.name+" "+this.category+" "+this.price+" "+dateFormat.format(this.date)+" "+URL;
     }
 }

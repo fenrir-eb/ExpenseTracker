@@ -48,8 +48,7 @@ public class CategoryFragment extends Fragment {
             public void onClick(View view) {
                 String input = etxtCategory.getText().toString();
                 if(verifyInput(input)){
-                    Category category = new Category(input,0);
-                    viewModel.addCategory(category);
+                    viewModel.addCategory(new Category(input,0));
                     toast(input+" category added");
                     etxtCategory.setText("");
                 }
@@ -73,6 +72,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onChanged(List<Category> categories) {
                 categoryList = new ArrayList<>(categories);
+                viewModel.sortCategoriesLength(categoryList);
                 categoryAdapter.setData(categoryList);
             }
         });

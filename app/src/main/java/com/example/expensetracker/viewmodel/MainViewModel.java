@@ -86,6 +86,15 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    public void sortCategoriesLength(List<Category> categories){
+        Collections.sort(categories, new Comparator<Category>() {
+            @Override
+            public int compare(Category c1, Category c2) {
+                return Integer.compare(c1.getName().length(),c2.getName().length());
+            }
+        });
+    }
+
     public void sortExpenses(List<Expense> expenses){
         Collections.sort(expenses, new Comparator<Expense>() {
             @Override

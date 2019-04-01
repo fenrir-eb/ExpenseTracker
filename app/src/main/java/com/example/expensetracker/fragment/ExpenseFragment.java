@@ -30,8 +30,8 @@ public class ExpenseFragment extends Fragment {
     private MainViewModel viewModel;
     private CategoryAdapter adapter;
     private ArrayAdapter<String> arrayAdapter;
-    private List<Category> categoryList = new ArrayList<>();
     private List<String> spinnerCategories = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
 
     private Spinner spinner;
 
@@ -74,6 +74,7 @@ public class ExpenseFragment extends Fragment {
                 spinnerCategories.clear();
                 for(Category cat : categoryList)
                     spinnerCategories.add(cat.getName());
+
                 arrayAdapter.clear();
                 arrayAdapter.addAll(spinnerCategories);
             }
@@ -85,21 +86,24 @@ public class ExpenseFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateInput()) {
-                    Expense expense = new Expense(etxtName.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(etxtPrice.getText().toString()));
+                String expenseName = etxtName.getText().toString();
+                String expensePrice = etxtPrice.getText().toString();
+                String expenseCategory = spinner.getSelectedItem().toString();
+
+                if(validateInput(expenseName,expensePrice,expenseCategory)) {
+                    Expense expense = new Expense(expenseName, expenseCategory, Integer.parseInt(expensePrice));
                     viewModel.addExpense(expense);
-                    Toast.makeText(getContext(), "Expense added - "+expense.getPrice()+" rsd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Expense added - "+expensePrice+" rsd", Toast.LENGTH_SHORT).show();
                     etxtName.setText("");
                     etxtPrice.setText("");
-                } else{
+                } else
                     Toast.makeText(getContext(), "Incorrect data.", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
 
-    private boolean validateInput(){
-        return !(etxtName.getText().toString().isEmpty() || etxtPrice.getText().toString().isEmpty() || spinner.getSelectedItem()==null);
+    private boolean validateInput(String expenseName, String expensePrice, String expenseCategory){
+        return !(expenseName.isEmpty() || expensePrice.isEmpty() || expenseCategory==null);
     }
 
 }

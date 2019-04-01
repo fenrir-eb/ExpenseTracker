@@ -19,20 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ExpenseDetailActivity extends AppCompatActivity {
 
-    private Expense expense;
-    private MainViewModel viewModel;
-    private String data;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_details);
 
-        data = getIntent().getStringExtra("expenseKey");
+        String data = getIntent().getStringExtra("expenseKey");
         String[] split = data.split(" ");
 
-        ((TextView)findViewById(R.id.textview_data_details)).setText(parseData(split));
+        ((TextView)findViewById(R.id.textview_data_details)).setText(parseData(split,data));
         ImageView imgView = findViewById(R.id.image_details);
 
         Picasso.get().load(split[5]).into(imgView);
@@ -48,7 +43,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         });
     }
 
-    public String parseData(String[] split){
+    public String parseData(String[] split, String data){
         data = split[1]+ "\n";
         data += "Category: "+split[2]+"\n";
         data += "Paid: "+split[3]+"\n";

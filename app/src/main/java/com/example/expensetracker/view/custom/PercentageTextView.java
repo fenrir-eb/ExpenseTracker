@@ -37,10 +37,8 @@ public class PercentageTextView extends AppCompatTextView {
     private int sixthCircleColor;
     private float mCircleStrokeWidthInPx;
 
-    private int currentColor = 1;
+    private int currentColor = 0;
     private float startAngle;
-
-    private static String TAG = "PERCENG TEXT VIEW TAG DEBUG MADAFAKA";
 
     private Category[] categoryArray;
     private float sum;
@@ -141,20 +139,20 @@ public class PercentageTextView extends AppCompatTextView {
 
     private void checkColor(Paint mPaint){
         switch (currentColor){
-            case 1:
+            case 0:
                 mPaint.setColor(secondCircleColor); break;
-            case 2:
+            case 1:
                 mPaint.setColor(thirdCircleColor); break;
-            case 3:
+            case 2:
                 mPaint.setColor(fourthCircleColor); break;
-            case 4:
+            case 3:
                 mPaint.setColor(fifthCircleColor); break;
-            case 5:
+            case 4:
                 mPaint.setColor(sixthCircleColor); break;
-            case 6:
+            case 5:
                 mPaint.setColor(firstCircleColor); break;
         }
-        currentColor = (currentColor+1)%7;
+        currentColor = (currentColor+1)%6;
     }
 
     private void parseAttributes(AttributeSet attrs) {

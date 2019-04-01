@@ -58,7 +58,6 @@ public class PreviewFragment extends Fragment {
 
         initAdapters();
         initFilter(view);
-        initSpinner(view);
         initRecycler(view);
 
         return view;
@@ -73,12 +72,12 @@ public class PreviewFragment extends Fragment {
             @Override
             public void onChanged(List<Category> categories) {
                 categoryList = new ArrayList<>(categories);
-                categoryAdapter.setData(categoryList);
                 spinnerCategories.clear();
+                spinnerCategories.add("All");
                 for(Category cat : categoryList)
                     spinnerCategories.add(cat.getName());
+
                 arrayAdapter.clear();
-                arrayAdapter.add("All");
                 arrayAdapter.addAll(spinnerCategories);
             }});
 
@@ -105,6 +104,8 @@ public class PreviewFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
+        this.initSpinner(view);
     }
 
     private void initSpinner(View view){
@@ -122,9 +123,7 @@ public class PreviewFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
 
@@ -136,7 +135,6 @@ public class PreviewFragment extends Fragment {
     }
 
     private void initAdapters(){
-        categoryAdapter = new CategoryAdapter(false);
         expenseAdapter = new ExpenseAdapter();
         expenseAdapter.setDetailsCallback(new ExpenseAdapter.ExpenseDetailsCallback() {
             @Override
@@ -152,10 +150,6 @@ public class PreviewFragment extends Fragment {
                 removeExpense(expense);
             }
         });
-    }
-
-    private void removeExpense(Expense expense){
-        viewModel.removeExpense(expense);
     }
 
     @Override
@@ -176,4 +170,9 @@ public class PreviewFragment extends Fragment {
                 expense = exp;
         removeExpense(expense);
     }
+
+    private void removeExpense(Expense expense){
+        viewModel.removeExpense(expense);
+    }
+
 }
