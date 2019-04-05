@@ -14,7 +14,6 @@ import android.widget.Spinner;
 
 import com.example.expensetracker.R;
 import com.example.expensetracker.activity.ExpenseDetailActivity;
-import com.example.expensetracker.adapter.CategoryAdapter;
 import com.example.expensetracker.adapter.ExpenseAdapter;
 import com.example.expensetracker.model.Category;
 import com.example.expensetracker.model.Expense;
@@ -41,7 +40,6 @@ public class PreviewFragment extends Fragment {
     private MainViewModel viewModel;
     private Spinner spinner;
     private ArrayAdapter<String> arrayAdapter;
-    private CategoryAdapter categoryAdapter;
     private ExpenseAdapter expenseAdapter;
 
     private EditText etxtFilter;

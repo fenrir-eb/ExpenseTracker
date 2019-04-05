@@ -1,5 +1,6 @@
 package com.example.expensetracker.viewmodel;
 
+
 import com.example.expensetracker.model.Category;
 import com.example.expensetracker.model.Expense;
 
@@ -14,10 +15,6 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
-    private String[] categories = {"Groceries","Bills","Tuition"};
-    private String[] expenses = {"Milk","Butter","Cookies","SBB","Telenor"};
-    private int[] expensesPrice = {80,100,150,2500,999};
-
     private MutableLiveData<List<Expense>> expenseLiveData;
     private MutableLiveData<List<Category>> categoryLiveData;
 
@@ -31,7 +28,6 @@ public class MainViewModel extends ViewModel {
         this.expenseList = new ArrayList<>();
         this.categoryList = new ArrayList<>();
 
-        this.generateDummyData();
     }
 
     public void addExpense(Expense expense){
@@ -63,18 +59,19 @@ public class MainViewModel extends ViewModel {
             }
         }
         this.sortExpenses(filterExpenses);
-        this.setExpenseData(filterExpenses);
+        this.expenseLiveData.setValue(filterExpenses);
     }
 
     public void updateCategoryPrices(String category,int price,boolean bool){
         List<Category> updatedCategory = new ArrayList<>();
         for(Category cat: categoryList) {
-            if (cat.getName().equals(category))
-                cat.updatePrice(price,bool);
+            if (cat.getName().equals(category)) {
+                cat.updatePrice(price, bool);
+            }
             updatedCategory.add(cat);
         }
         this.sortCategories(updatedCategory);
-        this.setCategoryData(updatedCategory);
+        this.categoryLiveData.setValue(updatedCategory);
     }
 
     public void sortCategories(List<Category> categories){
@@ -86,7 +83,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    public void sortCategoriesLength(List<Category> categories){
+    public void sortCategoriesLenght(List<Category> categories){
         Collections.sort(categories, new Comparator<Category>() {
             @Override
             public int compare(Category c1, Category c2) {
@@ -94,6 +91,7 @@ public class MainViewModel extends ViewModel {
             }
         });
     }
+
 
     public void sortExpenses(List<Expense> expenses){
         Collections.sort(expenses, new Comparator<Expense>() {
@@ -103,21 +101,13 @@ public class MainViewModel extends ViewModel {
             }
         });
     }
+
     public LiveData<List<Expense>> getExpenseLiveData() {
         return expenseLiveData;
     }
 
-    public void setExpenseData(List<Expense> expenseList) {
-        this.expenseLiveData.setValue(new ArrayList<>(expenseList));
-    }
-
-
     public MutableLiveData<List<Category>> getCategoryLiveData() {
         return categoryLiveData;
-    }
-
-    public void setCategoryData(List<Category> categoryList) {
-        this.categoryLiveData.setValue(new ArrayList<>(categoryList));
     }
 
     public List<Expense> getExpenseList() {
@@ -137,4 +127,8 @@ public class MainViewModel extends ViewModel {
                 this.addExpense(new Expense(expenses[i],categories[1],expensesPrice[i]));
         }
     }
+
+    private String[] categories = {"Groceries","Bills","Tuition"};
+    private String[] expenses = {"Milk","Butter","Cookies","SBB","Telenor"};
+    private int[] expensesPrice = {80,100,150,2500,999};
 }

@@ -72,7 +72,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onChanged(List<Category> categories) {
                 categoryList = new ArrayList<>(categories);
-                viewModel.sortCategoriesLength(categoryList);
+                viewModel.sortCategoriesLenght(categoryList);
                 categoryAdapter.setData(categoryList);
             }
         });

@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProviders;
 public class ExpenseFragment extends Fragment {
 
     private MainViewModel viewModel;
-    private CategoryAdapter adapter;
     private ArrayAdapter<String> arrayAdapter;
     private List<String> spinnerCategories = new ArrayList<>();
     private List<Category> categoryList = new ArrayList<>();
@@ -63,14 +62,11 @@ public class ExpenseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new CategoryAdapter(false);
-
         viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         viewModel.getCategoryLiveData().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
                 categoryList = new ArrayList<>(categories);
-                adapter.setData(categoryList);
                 spinnerCategories.clear();
                 for(Category cat : categoryList)
                     spinnerCategories.add(cat.getName());

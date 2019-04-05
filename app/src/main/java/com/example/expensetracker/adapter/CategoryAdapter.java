@@ -1,6 +1,5 @@
 package com.example.expensetracker.adapter;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,6 @@ import android.widget.TextView;
 
 import com.example.expensetracker.R;
 import com.example.expensetracker.model.Category;
-import com.example.expensetracker.model.Expense;
 import com.example.expensetracker.util.CategoryDiffCallback;
 
 import java.util.ArrayList;
@@ -41,17 +39,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.tViewData.setText(category.getName());
         if(stats)
             holder.tViewPrice.setText(category.getSumPrice());
-        else
-            holder.tViewData.setGravity(Gravity.CENTER);
     }
 
-
     public void setData(List<Category> categories){
-        CategoryDiffCallback callback = new CategoryDiffCallback(categoryList,categories);
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
-        this.categoryList.clear();
-        this.categoryList.addAll(categories);
-        result.dispatchUpdatesTo(this);
+        if(stats){
+            this.categoryList.clear();
+            this.categoryList.addAll(categories);
+            notifyDataSetChanged();
+        } else{
+            CategoryDiffCallback callback = new CategoryDiffCallback(categoryList, categories);
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+            this.categoryList.clear();
+            this.categoryList.addAll(categories);
+            result.dispatchUpdatesTo(this);
+        }
     }
 
     @Override
